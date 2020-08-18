@@ -306,6 +306,13 @@ export default {
 				})
 				// 保存这一次的结果，用于下次列发生变化时作比较
 				this.lastSelectIndex = columnIndex;
+				// 为了让用户对多列变化时，对动态设置其他列的变更
+				if (index != null) {
+					this.$emit('columnchange', {
+						column: index,
+						index: columnIndex[index]
+					});
+				}
 			} else if(this.mode == 'single-column') {
 				let data = this.columnData[0][columnIndex[0]];
 				// 初始默认选中值
@@ -317,6 +324,10 @@ export default {
 				if(data && data.extra) tmp.extra = data.extra;
 				this.selectValue.push(tmp);
 			} else if(this.mode == 'mutil-column') {
+				// 对比前后两个数组，寻找变更的是哪一列，如果某一个元素不同，即可判定该列发生了变化
+				this.lastSelectIndex.map((val, idx) => {
+					if (val != columnIndex[idx]) index = idx;
+				});
 				// 初始默认选中值
 				columnIndex.map((item, index) => {
 					let data = this.columnData[index][columnIndex[index]];
@@ -329,6 +340,15 @@ export default {
 					if(data && data.extra) tmp.extra = data.extra;
 					this.selectValue.push(tmp);
 				})
+				// 保存这一次的结果，用于下次列发生变化时作比较
+				this.lastSelectIndex = columnIndex;
+				// 为了让用户对多列变化时，对动态设置其他列的变更
+				if (index != null) {
+					this.$emit('columnchange', {
+						column: index,
+						index: columnIndex[index]
+					});
+				}
 			}
 		},
 		close() {
