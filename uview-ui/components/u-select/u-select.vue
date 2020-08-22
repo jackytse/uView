@@ -300,7 +300,7 @@ export default {
 						label: data ? data[this.labelName] : null,
 					};
 					// 判断是否有需要额外携带的参数
-					if(data && data.extra) tmp.extra = data.extra;
+					if(data && data.extra !== undefined) tmp.extra = data.extra;
 					this.selectValue.push(tmp);
 
 				})
@@ -321,7 +321,7 @@ export default {
 					label: data ? data[this.labelName] : null,
 				};
 				// 判断是否有需要额外携带的参数
-				if(data && data.extra) tmp.extra = data.extra;
+				if(data && data.extra !== undefined) tmp.extra = data.extra;
 				this.selectValue.push(tmp);
 			} else if(this.mode == 'mutil-column') {
 				// 对比前后两个数组，寻找变更的是哪一列，如果某一个元素不同，即可判定该列发生了变化
@@ -337,7 +337,7 @@ export default {
 						label: data ? data[this.labelName] : null,
 					};
 					// 判断是否有需要额外携带的参数
-					if(data && data.extra) tmp.extra = data.extra;
+					if(data && data.extra !== undefined) tmp.extra = data.extra;
 					this.selectValue.push(tmp);
 				})
 				// 保存这一次的结果，用于下次列发生变化时作比较
